@@ -18,3 +18,11 @@ module.exports.createCustomer = async function (req, res) {
     return;
   }
 };
+
+module.exports.createSession = function (req, res) {
+  console.log("success", "Logged in Successfully");
+
+  return res
+    .status(200)
+    .json({ message: "customer logged in successfully", status: "success" });
+};
