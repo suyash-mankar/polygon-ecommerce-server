@@ -3,10 +3,10 @@ const app = express();
 const port = 8000;
 
 const bodyParser = require("body-parser");
-// const db = require("./config/mongoose");
+const db = require("./config/mongoose");
 
 // use bodyparser
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
 
 // use routes
 app.use("/", require("./routes"));
