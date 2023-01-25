@@ -2,17 +2,20 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 
-const customersController = require("../controllers/customers_controller");
+const userController = require("../controllers/user_controller");
 
-router.post("/create", customersController.createCustomer);
+router.post("/register", userController.registerUser);
+
+
+
 router.post(
   "/create-session",
   passport.authenticate("local", {
     failureRedirect: "http://localhost:3000/customer/login",
   }),
-  customersController.createSession
+  userController.createSession
 );
 
-router.post("/addtocart", customersController.addProductToCart);
+router.post("/addtocart", userController.addProductToCart);
 
 module.exports = router;

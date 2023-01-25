@@ -12,11 +12,13 @@ module.exports.getAllProducts = async function (req, res) {
 
 module.exports.createProduct = async function (req, res) {
   try {
-    let imageUrl = req.file.path;
     let product = await Product.findOne({ title: req.body.title });
 
     if (!product) {
-      let newProduct = await Product.create({ ...req.body, image: imageUrl });
+      let newProduct = await Product.create({
+        ...req.body,
+        image: { public_id: "this is a sample id", url: "productpicUrl" },
+      });
       return res.status(200).json({ product: newProduct, status: "success" });
     } else {
       return res
