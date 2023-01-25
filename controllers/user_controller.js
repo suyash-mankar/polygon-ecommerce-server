@@ -39,3 +39,9 @@ module.exports.loginUser = function (req, res) {
 
   sendToken(user, 200, res);
 };
+
+module.exports.logout = function (req, res) {
+  res.cookie("token", null, { expires: new Date(Date.now()), httpOnly: true });
+
+  res.status(200).json({ message: "logged out successfully", success: true });
+};
