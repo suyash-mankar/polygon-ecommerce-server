@@ -1,13 +1,17 @@
-const User = require("../models/User");
+const User = require("../models/user");
+const sendToken = require("../utils/jwtToken");
 
 module.exports.registerUser = async function (req, res) {
   try {
     let user = await User.findOne({ email: req.body.email });
     if (!user) {
       user = await User.create(req.body);
-      return res.status(200).json({ user: newUser, status: "success" });
+
+      sendToken(user, 201, res);
     } else {
-      return res.status(200).json({ user, success: true });
+      return res
+        .status(200)
+        .json({ message: "user already registered", success: false });
     }
   } catch (err) {
     console.log(err);
@@ -15,18 +19,23 @@ module.exports.registerUser = async function (req, res) {
   }
 };
 
-module.exports.createSession = function (req, res) {
-  console.log("success", "Logged in Successfully");
+module.exports.loginUser = function (req, res) {
+  const { email, password } = req.body;
 
-  return res
-    .status(200)
-    .json({ message: "customer logged in successfully", status: "success" });
-};
-
-module.exports.addProductToCart = async function (req, res) {
-  try {
-    return res.status(200).json({ products: "products", status: "success" });
-  } catch (err) {
-    return res.redirect("back");
+  if (!email || !password) {
+    return res
+      .status(400)
+      .json({ message: "please enter both email and password" });
   }
+
+  let user = User.findOne({ email }).select("+password");
+  if (!user) {
+    return res.status(401).json({ message: "Invalid email or password" });
+  }
+  let isPasswordMatched = user.comparePassword(password);
+  if (!isPasswordMatched) {
+    return res.status(401).json({ message: "Invalid email or password" });
+  }
+
+  sendToken(user, 200, res);
 };

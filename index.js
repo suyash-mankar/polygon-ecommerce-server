@@ -4,24 +4,25 @@ const env = require("./config/environment");
 var cors = require("cors");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
+const cookieParser = require("cookie-parser");
 const app = express();
 const port = 8000;
 
 app.use(cors());
 
 const bodyParser = require("body-parser");
+
 const db = require("./config/mongoose");
 
 // Used for session cookie
 const session = require("express-session");
-const passport = require("passport");
-const passportLocal = require("./config/passport-local-strategy");
 // const passportGoogle = require("./config/passport-google-oauth2-strategy");
 
 const MongoStore = require("connect-mongo");
 
 // use bodyparser
 app.use(bodyParser.json());
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/uploads", express.static(__dirname + "/uploads"));
@@ -50,10 +51,6 @@ app.use(
     },
   })
 );
-
-app.use(passport.initialize());
-app.use(passport.session());
-// app.use(passport.setAuthenticatedUser);
 
 // use routes
 app.use("/", require("./routes"));
