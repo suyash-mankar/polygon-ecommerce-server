@@ -24,6 +24,8 @@ const MongoStore = require("connect-mongo");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use("/uploads", express.static(__dirname + "/uploads"));
+
 // mongo store is used to store the session cookie in the DB
 app.use(
   session({

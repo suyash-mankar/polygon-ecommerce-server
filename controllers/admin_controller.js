@@ -3,8 +3,6 @@ const Product = require("../models/product");
 // get the sign up data
 module.exports.createProduct = async function (req, res) {
   try {
-    console.log(req.file);
-    console.log(req.body);
     let imageUrl = req.file.path;
     let product = await Product.findOne({ title: req.body.title });
 

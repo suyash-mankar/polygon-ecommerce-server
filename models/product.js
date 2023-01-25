@@ -12,24 +12,31 @@ const productSchema = new mongoose.Schema(
     },
     description: {
       type: String,
+      required: true,
     },
     image: {
       type: String,
+      required: true,
     },
     qty: {
-      type: String,
+      type: Number,
+      required: true,
     },
     price: {
-      type: String,
+      type: Number,
+      required: true,
     },
     creator: {
       type: String,
+      required: true,
     },
     collectionName: {
       type: String,
+      required: true,
     },
     chain: {
       type: String,
+      required: true,
     },
   },
   {
