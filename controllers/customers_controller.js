@@ -1,4 +1,5 @@
 const Customer = require("../models/customer");
+const AddToCart = require("../models/addToCart");
 
 // get the sign up data
 module.exports.createCustomer = async function (req, res) {
@@ -25,4 +26,12 @@ module.exports.createSession = function (req, res) {
   return res
     .status(200)
     .json({ message: "customer logged in successfully", status: "success" });
+};
+
+module.exports.addProductToCart = async function (req, res) {
+  try {
+    return res.status(200).json({ products: "products", status: "success" });
+  } catch (err) {
+    return res.redirect("back");
+  }
 };
