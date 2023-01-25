@@ -7,21 +7,21 @@ const { isAuthenticatedUser, authorizedRoles } = require("../middleware/auth");
 router.get("/all", productsController.getAllProducts);
 
 router.post(
-  "/create",
+  "admin/create",
   isAuthenticatedUser,
   authorizedRoles("admin"),
   productsController.createProduct
 );
 
 router.put(
-  "/:id",
+  "admin/:id",
   isAuthenticatedUser,
   authorizedRoles("admin"),
   productsController.updateProduct
 );
 
 router.delete(
-  "/:id",
+  "admin/:id",
   isAuthenticatedUser,
   authorizedRoles("admin"),
   productsController.deleteProduct
