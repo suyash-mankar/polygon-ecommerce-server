@@ -2,8 +2,10 @@ const Product = require("../models/product");
 
 module.exports.getAllProducts = async function (req, res) {
   try {
+    let productsCount = await Product.countDocuments();
+
     let products = await Product.find({});
-    return res.status(200).json({ products: products, status: "success" });
+    return res.status(200).json({ products, productsCount, success: true });
   } catch (err) {
     console.log(err);
     return;

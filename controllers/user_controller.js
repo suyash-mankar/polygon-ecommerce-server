@@ -3,10 +3,16 @@ const sendToken = require("../utils/jwtToken");
 
 module.exports.registerUser = async function (req, res) {
   try {
+    let { name, email, password } = req.body;
+    if (!name || !email || !password) {
+      return res
+        .status(400)
+        .json({ message: "please enter all fields", success: false });
+    }
+
     let user = await User.findOne({ email: req.body.email });
     if (!user) {
       user = await User.create(req.body);
-
       sendToken(user, 201, res);
     } else {
       return res
@@ -19,7 +25,7 @@ module.exports.registerUser = async function (req, res) {
   }
 };
 
-module.exports.loginUser = function (req, res) {
+module.exports.loginUser = async function (req, res) {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -28,11 +34,11 @@ module.exports.loginUser = function (req, res) {
       .json({ message: "please enter both email and password" });
   }
 
-  let user = User.findOne({ email }).select("+password");
+  let user = await User.findOne({ email }).select("+password");
   if (!user) {
     return res.status(401).json({ message: "Invalid email or password" });
   }
-  let isPasswordMatched = user.comparePassword(password);
+  let isPasswordMatched = await user.comparePassword(password);
   if (!isPasswordMatched) {
     return res.status(401).json({ message: "Invalid email or password" });
   }

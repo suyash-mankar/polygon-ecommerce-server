@@ -22,14 +22,14 @@ router.get(
 router.put(
   "admin/:id",
   isAuthenticatedUser,
-  authorizeRoles("admin"),
+  authorizedRoles("admin"),
   ordersController.updateOrder
 );
 
 router.delete(
   "admin/:id",
   isAuthenticatedUser,
-  authorizeRoles("admin"),
+  authorizedRoles("admin"),
   ordersController.updateOrder
 );
 

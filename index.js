@@ -5,25 +5,27 @@ var cors = require("cors");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 const cookieParser = require("cookie-parser");
+const fileUpload = require("express-fileupload");
 const app = express();
 const port = 8000;
+const bodyParser = require("body-parser");
+const cloudinary = require("cloudinary");
+const db = require("./config/mongoose");
+const session = require("express-session");
+const MongoStore = require("connect-mongo");
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 app.use(cors());
 
-const bodyParser = require("body-parser");
-
-const db = require("./config/mongoose");
-
-// Used for session cookie
-const session = require("express-session");
-// const passportGoogle = require("./config/passport-google-oauth2-strategy");
-
-const MongoStore = require("connect-mongo");
-
-// use bodyparser
 app.use(bodyParser.json());
-app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(fileUpload());
 
 app.use("/uploads", express.static(__dirname + "/uploads"));
 
