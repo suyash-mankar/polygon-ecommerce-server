@@ -2,6 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const env = require("./config/environment");
 var cors = require("cors");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 const app = express();
 const port = 8000;
 
@@ -20,7 +22,7 @@ const MongoStore = require("connect-mongo");
 
 // use bodyparser
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // mongo store is used to store the session cookie in the DB
 app.use(
