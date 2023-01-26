@@ -78,6 +78,9 @@ module.exports.deleteProduct = async function (req, res) {
         .json({ message: "Product not found", success: false });
     }
 
+    // deleting image from cloudinary
+    await cloudinary.v2.uploader.destroy(product.image.public_id);
+
     await product.remove();
 
     return res
