@@ -22,11 +22,11 @@ cloudinary.config({
 
 app.use(cors());
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(fileUpload());
-
+app.use(express.json({ limit: "50mb" }));
 app.use("/uploads", express.static(__dirname + "/uploads"));
 
 // mongo store is used to store the session cookie in the DB

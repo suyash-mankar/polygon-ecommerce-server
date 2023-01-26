@@ -5,6 +5,11 @@ const productsController = require("../controllers/products_controller");
 const { isAuthenticatedUser, authorizedRoles } = require("../middleware/auth");
 
 router.get("/all", productsController.getAllProducts);
+router.get(
+  "/admin/all",
+  isAuthenticatedUser,
+  productsController.getAdminProducts
+);
 
 router.post(
   "/admin/create",

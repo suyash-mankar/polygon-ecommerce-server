@@ -1,4 +1,5 @@
 const Product = require("../models/product");
+const cloudinary = require("cloudinary");
 
 module.exports.getAllProducts = async function (req, res) {
   try {
@@ -14,13 +15,24 @@ module.exports.getAllProducts = async function (req, res) {
 
 module.exports.createProduct = async function (req, res) {
   try {
+    let image = req.body.image;
+
+    let imageLink;
+    const result = await cloudinary.v2.uploader.upload(image, {
+      folder: "products",
+    });
+
+    imageLink = {
+      public_id: result.public_id,
+      url: result.secure_url,
+    };
+
+    req.body.image = imageLink;
+
     let product = await Product.findOne({ title: req.body.title });
 
     if (!product) {
-      let newProduct = await Product.create({
-        ...req.body,
-        image: { public_id: "this is a sample id", url: "productpicUrl" },
-      });
+      let newProduct = await Product.create(req.body);
       return res.status(200).json({ product: newProduct, status: "success" });
     } else {
       return res
@@ -88,6 +100,17 @@ module.exports.getProductDetails = async function (req, res) {
     }
 
     return res.status(200).json({ product, success: true });
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+};
+
+// Get all products for admin
+module.exports.getAdminProducts = async function (req, res) {
+  try {
+    let products = await Product.find({});
+    return res.status(200).json({ products, success: true });
   } catch (err) {
     console.log(err);
     return;

@@ -30,7 +30,7 @@ router.delete(
   "admin/:id",
   isAuthenticatedUser,
   authorizedRoles("admin"),
-  ordersController.updateOrder
+  ordersController.deleteOrder
 );
 
 module.exports = router;
