@@ -55,6 +55,27 @@ module.exports.updateProduct = async function (req, res) {
         .json({ message: "Product not found", success: false });
     }
 
+    // Image Start Here
+    let image = req.body.image;
+
+    if (image !== undefined) {
+      let imageLink = {};
+
+      // Deleting Images From Cloudinary
+      await cloudinary.v2.uploader.destroy(product.image.public_id);
+
+      const result = await cloudinary.v2.uploader.upload(image, {
+        folder: "products",
+      });
+
+      imageLink = {
+        public_id: result.public_id,
+        url: result.secure_url,
+      };
+
+      req.body.image = imageLink;
+    }
+
     product = await Product.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,

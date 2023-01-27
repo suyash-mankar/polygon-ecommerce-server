@@ -66,3 +66,17 @@ exports.getUserDetails = async (req, res) => {
     return;
   }
 };
+
+// Get all users(admin)
+exports.getAllUser = async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json({
+      success: true,
+      users,
+    });
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+};
