@@ -33,7 +33,7 @@ module.exports.createProduct = async function (req, res) {
 
     if (!product) {
       let newProduct = await Product.create(req.body);
-      return res.status(200).json({ product: newProduct, status: "success" });
+      return res.status(200).json({ product: newProduct, success: true });
     } else {
       return res
         .status(200)
