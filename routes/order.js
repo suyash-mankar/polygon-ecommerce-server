@@ -5,7 +5,7 @@ const { isAuthenticatedUser, authorizedRoles } = require("../middleware/auth");
 
 router.post("/new", isAuthenticatedUser, ordersController.newOrder);
 
-router.post(
+router.get(
   "/:id",
   isAuthenticatedUser,
   authorizedRoles("admin"),
@@ -20,14 +20,14 @@ router.get(
 );
 
 router.put(
-  "admin/:id",
+  "/admin/:id",
   isAuthenticatedUser,
   authorizedRoles("admin"),
   ordersController.updateOrder
 );
 
 router.delete(
-  "admin/:id",
+  "/admin/:id",
   isAuthenticatedUser,
   authorizedRoles("admin"),
   ordersController.deleteOrder
