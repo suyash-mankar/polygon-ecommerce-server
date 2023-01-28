@@ -103,7 +103,7 @@ exports.updateOrder = async (req, res) => {
     return;
   }
 };
-    
+
 async function updateStock(id, quantity) {
   const product = await Product.findById(id);
 
