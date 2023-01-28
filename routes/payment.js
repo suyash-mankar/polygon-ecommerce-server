@@ -12,4 +12,10 @@ router.get(
   paymentController.sendStripeApiKey
 );
 
+router.post(
+  "/create-checkout-session",
+  isAuthenticatedUser,
+  paymentController.createCheckoutSession
+);
+
 module.exports = router;
