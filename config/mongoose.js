@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/polygon_ecommerce");
+mongoose.connect(
+  `mongodb+srv://suyashmankar:${process.env.MONGODB_ATLAS_PASS}@cluster0.7o1b7al.mongodb.net/polygon_ecommerce?retryWrites=true&w=majority`
+);
 
 const db = mongoose.connection;
 

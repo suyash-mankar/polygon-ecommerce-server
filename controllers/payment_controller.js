@@ -27,7 +27,6 @@ exports.sendStripeApiKey = async (req, res) => {
 
 exports.createCheckoutSession = async (req, res) => {
   try {
-    console.log(req.body.cartItems);
     const params = {
       submit_type: "pay",
       payment_method_types: ["card"],
@@ -56,22 +55,20 @@ exports.createCheckoutSession = async (req, res) => {
 
     const session = await stripe.checkout.sessions.create(params);
 
-    let totalCartAmount = 0;
-    req.body.cartItems.map((item) => {
-      totalCartAmount += item.price;
-    });
+    // let totalCartAmount = 0;
+    // req.body.cartItems.map((item) => {
+    //   totalCartAmount += item.price;
+    // });
 
-    const myPayment = await stripe.paymentIntents.create({
-      amount: totalCartAmount,
-      currency: "inr",
-      metadata: {
-        company: "NFT-Ecommerce",
-      },
-    });
+    // const myPayment = await stripe.paymentIntents.create({
+    //   amount: totalCartAmount,
+    //   currency: "inr",
+    //   metadata: {
+    //     company: "NFT-Ecommerce",
+    //   },
+    // });
 
-    res
-      .status(200)
-      .json({ success: true, client_secret: myPayment.client_secret, session });
+    res.status(200).json(session);
 
     // res.redirect(303, session.url);
   } catch (error) {
