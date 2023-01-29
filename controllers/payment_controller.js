@@ -49,8 +49,8 @@ exports.createCheckoutSession = async (req, res) => {
         };
       }),
       mode: "payment",
-      success_url: `http://localhost:3000/success`,
-      cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+      success_url: `${process.env.HOSTED_CLIENT_URL}/success`,
+      cancel_url: `${process.env.HOSTED_CLIENT_URL}`,
     };
 
     const session = await stripe.checkout.sessions.create(params);
