@@ -1,9 +1,9 @@
 require("dotenv").config();
 const express = require("express");
 var cors = require("cors");
+const cookieParser = require("cookie-parser");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
-const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 const app = express();
 const port = 8000;
@@ -11,6 +11,8 @@ const bodyParser = require("body-parser");
 const cloudinary = require("cloudinary");
 const db = require("./config/mongoose");
 const session = require("express-session");
+
+app.use(cookieParser());
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
@@ -27,7 +29,6 @@ app.use(cors(corsOptions));
 
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
 app.use(fileUpload());
 app.use(express.json({ limit: "50mb" }));
 app.use("/uploads", express.static(__dirname + "/uploads"));

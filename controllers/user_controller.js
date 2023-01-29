@@ -56,11 +56,12 @@ module.exports.logout = function (req, res) {
 exports.getUserDetails = async (req, res) => {
   try {
     // if (req.user) {
-      const user = await User.findById(req.user.id);
-      res.status(200).json({
-        success: true,
-        user,
-      });
+
+    const user = await User.findById(req.user.id);
+    res.status(200).json({
+      success: true,
+      user,
+    });
     // }
   } catch (error) {
     console.log(error);
@@ -71,6 +72,7 @@ exports.getUserDetails = async (req, res) => {
 // Get all users(admin)
 exports.getAllUser = async (req, res) => {
   try {
+
     const users = await User.find();
     res.status(200).json({
       success: true,
